@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-light bg-dark" style="padding-top: 25px;padding-bottom: 25px;">
+        <a class="navbar-brand " href="#" style="color:white;font-weight:bolder;font-size: 25px;">
+          
+          What's the Weather around you ?
+        </a>
+    </nav>
+        <div class="main">
+            <h1 style="font-size: 30px;">Search City</h1>
+            <form method = "POST">
+                {% csrf_token %}
+                <div class="form-row align-items-center mx-auto text-center">
+                    <label class="sr-only" for="inlineFormInputName">Name</label>
+                    <input type="text" class="form-control" id="inlineFormInputName" placeholder="City Name" name = "city">
+                    <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Submit</button>
+              </div>
+            </form>
+            {%if d%}
+            {%for d1 in d %}
+            <div class="card bg-light mb-3" style="max-width: 18rem; margin-top: 20px;">
+                <div class="card-header">Weather Information</div>
+                <div class="card-body">
+                  <h5 class="card-title">{{d1.name}}</h5>
+                  <h6 class="card-title">{{d1.temp}} degree Celsius</h6>
+                  <p class="card-text"><b>{{d1.main}}</b><br>{{d1.desc}}</p>
+                  <p class="card-text"><b>Longitude</b> : {{d1.lon}}</p>
+                  <p class="card-text"><b>Latitude</b> : {{d1.lat}}</p>
+                </div>
+            </div>
+            {%endfor%}
+            {%else%}
+            {%if error %}
+            <h4 style="color: red; margin-top: 20px;">{{error}} !</h4>
+            {%endif%}
+            {%endif%}
+        </div>
+        
+      </form>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
